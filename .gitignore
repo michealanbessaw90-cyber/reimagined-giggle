@@ -1,5 +1,858 @@
-# Object file
-*.o
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>መተባበር ጠቅላላ የመስታወት ሥራና አቅርቦት | 22 ገጾች</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-bright: #f5d76e;
+            --text-light: #f8f9fa;
+            --text-muted: #cbd5e1;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(212, 175, 55, 0.28);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-# Ada Library Information
-*.ali
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Ethiopic', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0c;
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.6s ease;
+        }
+
+        /* Top Navigation Bar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(8, 8, 12, 0.9);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 14px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1.15rem;
+            cursor: pointer;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .main-nav button {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-light);
+            padding: 7px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .main-nav button:hover, .main-nav button.active-nav {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .page-indicator {
+            background: linear-gradient(135deg, var(--gold), #a67c00);
+            color: #080808;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* 22-Page Quick Switcher Bar */
+        .page-strip {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 15, 20, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 999;
+            padding: 8px 5%;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .page-strip::-webkit-scrollbar {
+            display: none;
+        }
+
+        .page-num-btn {
+            min-width: 34px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .page-num-btn:hover, .page-num-btn.active {
+            background: var(--gold);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* Page Container */
+        main {
+            padding-top: 120px;
+            padding-bottom: 90px;
+            min-height: 100vh;
+        }
+
+        .page {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+            animation: fadeSlide 0.45s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & Cards */
+        .page-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 30px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold-bright);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        h1, h2 {
+            color: var(--gold-bright);
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        h1 { font-size: 2.4rem; }
+        h2 { font-size: 1.95rem; }
+
+        p.lead {
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .glass-card h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .photo-frame {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(212, 175, 55, 0.35);
+            background: #000;
+            position: relative;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 310px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.04);
+        }
+
+        .photo-caption {
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--gold-bright);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            color: #080808;
+            padding: 12px 26px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .phone-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            margin-bottom: 14px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .phone-box:hover {
+            background: rgba(212, 175, 55, 0.18);
+            transform: translateX(6px);
+        }
+
+        /* Bottom Next / Prev Bar */
+        .bottom-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(8, 8, 12, 0.92);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--glass-border);
+            padding: 12px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-arrow {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold-bright);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .nav-arrow:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.45rem; }
+            .main-nav button { padding: 5px 9px; font-size: 0.8rem; }
+            .brand span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Main Menu -->
+    <header>
+        <div class="brand" onclick="goToPage(1)">
+            <i class="fa-solid fa-gem"></i>
+            <span>መተባበር የመስታወት ሥራ</span>
+        </div>
+        <nav class="main-nav">
+            <button onclick="goToPage(1)" id="nav-home">መግቢያ</button>
+            <button onclick="goToPage(2)" id="nav-about">ስለኛ</button>
+            <button onclick="goToPage(3)" id="nav-services">አገልግሎት</button>
+            <button onclick="goToPage(22)" id="nav-contact">ማነጋገሪያ</button>
+        </nav>
+        <div class="page-indicator" id="page-counter">ገጽ 1 / 22</div>
+    </header>
+
+    <!-- 22-Page Direct Switcher Strip -->
+    <div class="page-strip" id="page-strip"></div>
+
+    <main>
+        <!-- PAGE 1: መግቢያ (Home) -->
+        <section class="page active" id="page-1" data-bg="linear-gradient(135deg, #09090b 0%, #1c1917 100%)">
+            <span class="page-badge">ገጽ 1 — መግቢያ</span>
+            <h1>መተባበር ጠቅላላ የመስታወት ሥራና አቅርቦት</h1>
+            <p class="lead">ለዘመናዊ ሪል እስቴቶች፣ ለአፓርትመንቶች፣ ለቢሮዎች እና ለመኖሪያ ቤቶች ዓለም አቀፍ ደረጃቸውን የጠበቁ የመስታወት ሥራዎችን እና አቅርቦቶችን በላቀ ጥራት እናቀርባለን።</p>
+            <div class="grid-2">
+                <div>
+                    <div class="glass-card" style="margin-bottom: 20px;">
+                        <h3><i class="fa-solid fa-award"></i> ዋና አገልግሎቶቻችን</h3>
+                        <p style="color: var(--text-muted); line-height: 1.9;">
+                            • የሪል እስቴት መስታወት<br>
+                            • የአፓርትመንቶች መስታወት<br>
+                            • ዘመናዊ የሻወር ቦክስ (Shower Box)<br>
+                            • ፍሬምለስ ፓርትሽን (Frameless Partition)<br>
+                            • ሀንዲሪል (Handrail)<br>
+                            • የተለያየ ከለር ያላቸው መስታወቶች አቅርቦት
+                        </p>
+                    </div>
+                    <button class="btn-gold" onclick="goToPage(22)"><i class="fa-solid fa-phone"></i> አሁኑኑ ያነጋግሩን</button>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" alt="መተባበር የመስታወት ሥራ">
+                    <div class="photo-caption"><span>ዘመናዊ የመስታወት ዲዛይን</span><span>መተባበር</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: ስለኛ (About Us) -->
+        <section class="page" id="page-2" data-bg="linear-gradient(135deg, #0c192c 0%, #172a46 100%)">
+            <span class="page-badge">ገጽ 2 — ስለኛ</span>
+            <h2>ስለ መተባበር ጠቅላላ የመስታወት ሥራና አቅርቦት</h2>
+            <p class="lead">ድርጅታችን በዘርፉ ሰፊ ልምድ ባላቸው ባለሙያዎች የተደራጀ ሲሆን፣ ጥንካሬን፣ ውበትን እና ደህንነትን ያጣመሩ የመስታወት ውጤቶችን ለደንበኞቻችን ያቀርባል።</p>
+            <div class="grid-3">
+                <div class="glass-card">
+                    <h3><i class="fa-solid fa-shield-halved"></i> አስተማማኝ ጥራት</h3>
+                    <p style="color: var(--text-muted);">ለግንባታ እና ለውስጥ ዲዛይን የሚውሉ ወፍራም እና ጠንካራ የደህንነት መስታወቶችን (Tempered Glass) እናቀርባለን።</p>
+                </div>
+                <div class="glass-card">
+                    <h3><i class="fa-solid fa-compass-drafting"></i> ዘመናዊ ዲዛይን</h3>
+                    <p style="color: var(--text-muted);">የቤትዎን ወይም የሕንፃዎን ውበት በእጥፍ የሚያሳድጉ ፍሬምለስ እና ባለቀለም መስታወቶችን በትክክለኛ ልኬት እንገጥማለን።</p>
+                </div>
+                <div class="glass-card">
+                    <h3><i class="fa-solid fa-clock"></i> ፈጣን አቅርቦት</h3>
+                    <p style="color: var(--text-muted);">ለሪል እስቴቶችና ለአፓርትመንት ፕሮጀክቶች በተያዘላቸው የጊዜ ገደብ መሠረት ሥራውን አጠናቅቀን እናስረክባለን።</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: የሪል እስቴት መስታወት (Real Estate Glass) -->
+        <section class="page" id="page-3" data-bg="linear-gradient(135deg, #09221c 0%, #133b32 100%)">
+            <span class="page-badge">ገጽ 3 — አገልግሎት ፩</span>
+            <h2>የሪል እስቴት መስታወት ሥራና አቅርቦት</h2>
+            <p class="lead">ለትላልቅ የሪል እስቴት መንደሮች እና የንግድ ሕንፃዎች የሚሆኑ ሙቀትና ድምፅ የሚከላከሉ ዘመናዊ የመስታወት ገጽታዎችን እናቀርባለን።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80" alt="የሪል እስቴት መስታወት">
+                    <div class="photo-caption"><span>የሪል እስቴት ሕንፃ መስታወት</span><span>ፎቶ 1</span></div>
+                </div>
+                <div class="glass-card">
+                    <h3>ለሪል እስቴት ፕሮጀክቶች ልዩ ጥቅሞች</h3>
+                    <p style="color: var(--text-muted); line-height: 1.9;">
+                        ✓ የፀሐይ ጨረርን የሚመጥኑ (Reflective & Tinted) መስታወቶች<br>
+                        ✓ በብዛት ለሚታዘዙ ፕሮጀክቶች ልዩ ቅናሽ<br>
+                        ✓ ከአሉሚኒየም እና ከብረት ፍሬሞች ጋር የተቀናጀ ገጠማ<br>
+                        ✓ ረጅም ዕድሜ እና ዋስትና ያለው አቅርቦት
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: የአፓርትመንቶች መስታወት (Apartment Glass) -->
+        <section class="page" id="page-4" data-bg="linear-gradient(135deg, #1b112c 0%, #2d1b4e 100%)">
+            <span class="page-badge">ገጽ 4 — አገልግሎት ፪</span>
+            <h2>የአፓርትመንቶች መስታወት</h2>
+            <p class="lead">ለመኖሪያ አፓርትመንቶች ሰፋፊ መስኮቶች፣ የበረንዳ በሮች እና የውስጥ ክፍል መስታወቶችን በከፍተኛ ጥንቃቄ እና ውበት እንሠራለን።</p>
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3>የአፓርትመንት መስታወት አማራጮች</h3>
+                    <p style="color: var(--text-muted); line-height: 1.9;">
+                        ✓ ተንሸራታች የበረንዳ መስታወት በሮች (Sliding Glass Doors)<br>
+                        ✓ ድምፅ የማያስገቡ ድርብ መስታወቶች (Double Glazed)<br>
+                        ✓ ለሳሎን እና ለመኝታ ቤት የሚሆኑ ዘመናዊ መስኮቶች
+                    </p>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=900&q=80" alt="የአፓርትመንቶች መስታወት">
+                    <div class="photo-caption"><span>ዘመናዊ አፓርትመንት መስታወት</span><span>ፎቶ 2</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: የሻወር ቦክስ (Shower Box) -->
+        <section class="page" id="page-5" data-bg="linear-gradient(135deg, #08232c 0%, #103c4a 100%)">
+            <span class="page-badge">ገጽ 5 — አገልግሎት ፫</span>
+            <h2>ዘመናዊ የሻወር ቦክስ (Shower Box)</h2>
+            <p class="lead">መታጠቢያ ቤትዎን ንፁህ፣ ደረቅ እና ባለ 5 ኮከብ ሆቴል ደረጃ የሚያደርጉ የቴምፐርድ መስታወት ሻወር ቦክሶችን እንሠራለን።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=900&q=80" alt="የሻወር ቦክስ">
+                    <div class="photo-caption"><span>ፍሬምለስ የሻወር ቦክስ</span><span>ፎቶ 3</span></div>
+                </div>
+                <div class="glass-card">
+                    <h3>የሻወር ቦክስ ዓይነቶች</h3>
+                    <p style="color: var(--text-muted); line-height: 1.9;">
+                        ✓ ተከፋች (Hinged) እና ተንሸራታች (Sliding) ሻወር ቦክሶች<br>
+                        ✓ ዝገት የማይዛቸው ስቴንለስ ስቲል (Stainless Steel) ማጠፊያዎች<br>
+                        ✓ ውሃ የማያሾልኩ የሲሊኮን እና የጎማ መከላከያዎች<br>
+                        ✓ ጥርት ያለ (Clear) ወይም ጭጋጋማ (Frosted) መስታወት
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 6: ፍሬምለስ ፓርትሽን (Frameless Partition) -->
+        <section class="page" id="page-6" data-bg="linear-gradient(135deg, #26160c 0%, #3f2414 100%)">
+            <span class="page-badge">ገጽ 6 — አገልግሎት ፬</span>
+            <h2>ፍሬምለስ ፓርትሽን (Frameless Partition)</h2>
+            <p class="lead">ለቢሮዎች፣ ለባንኮች፣ ለሱቆች እና ለቤት ውስጥ ክፍሎች ያለምንም ግድግዳ በብርሃን የተሞላ ሰፊ እይታ የሚፈጥሩ የመስታወት መከለያዎች።</p>
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3>ፍሬምለስ ፓርትሽን ለምን ይመረጣል?</h3>
+                    <p style="color: var(--text-muted); line-height: 1.9;">
+                        ✓ ክፍሎችን ሳያጠብ ዘመናዊ መልክ ይሰጣል<br>
+                        ✓ የስብሰባ ክፍሎችን እና የሥራ ቦታዎችን በውበት ይለያል<br>
+                        ✓ 10ሚ.ሜ እና 12ሚ.ሜ ወፍራም የደህንነት መስታወት
+                    </p>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80" alt="ፍሬምለስ ፓርትሽን">
+                    <div class="photo-caption"><span>የቢሮ ፍሬምለስ ፓርትሽን</span><span>ፎቶ 4</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 7: ሀንዲሪል (Handrail) -->
+        <section class="page" id="page-7" data-bg="linear-gradient(135deg, #0e1e2e 0%, #1b3652 100%)">
+            <span class="page-badge">ገጽ 7 — አገልግሎት ፭</span>
+            <h2>የመስታወት ሀንዲሪል (Glass Handrail)</h2>
+            <p class="lead">ለደረጃዎች፣ ለበረንዳዎች እና ለመዋኛ ገንዳ ዙሪያዎች ከፍተኛ ጥንካሬ እና ዘመናዊ ውበት ያላቸው የመስታወት የእጅ መያዣዎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80" alt="ሀንዲሪል">
+                    <div class="photo-caption"><span>ዘመናዊ የደረጃ ሀንዲሪል</span><span>ፎቶ 5</span></div>
+                </div>
+                <div class="glass-card">
+                    <h3>የሀንዲሪል ዲዛይኖቻችን</h3>
+                    <p style="color: var(--text-muted); line-height: 1.9;">
+                        ✓ ስፒጎት (Spigot) እና ቻናል (U-Channel) ፍሬምለስ ሀንዲሪል<br>
+                        ✓ ከስቴንለስ ስቲል ወይም ከአሉሚኒየም መያዣ ጋር<br>
+                        ✓ ለቤት ውስጥ ደረጃዎች እና ለውጭ በረንዳዎች ተስማሚ
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 8: ከለር ያላቸው መስታወቶች (Colored Glass) -->
+        <section class="page" id="page-8" data-bg="linear-gradient(135deg, #2b0d18 0%, #4a1528 100%)">
+            <span class="page-badge">ገጽ 8 — አገልግሎት ፮</span>
+            <h2>ከለር ያላቸው መስታወቶች አቅርቦት</h2>
+            <p class="lead">እንደ ሕንፃዎ ወይም የቤትዎ ዲዛይን ምርጫ የተለያዩ ቀለማት እና ውፍረት ያላቸውን ጥራት ያላቸው መስታወቶች በብዛትም ሆነ በችርቻሮ እናቀርባለን።</p>
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3>የምናቀርባቸው የመስታወት ቀለማት</h3>
+                    <p style="color: var(--text-muted); line-height: 1.9;">
+                        • ጥቁር እና ግራጫ (Dark Grey & Euro Grey)<br>
+                        • ብሮንዝ እና ወርቃማ (Bronze & Golden Reflective)<br>
+                        • ሰማያዊ እና አረንጓዴ (Ocean Blue & French Green)<br>
+                        • ጥርት ያለ (Ultra Clear) እና ፍሮስትድ (Frosted)
+                    </p>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="ከለር ያላቸው መስታወቶች">
+                    <div class="photo-caption"><span>ባለቀለም የሕንፃ መስታወት</span><span>ፎቶ 6</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 9: ጋለሪ ፩ (Photos 7 & 8) -->
+        <section class="page" id="page-9" data-bg="linear-gradient(135deg, #102418 0%, #1d3f2b 100%)">
+            <span class="page-badge">ገጽ 9 — የሥራ ናሙና ጋለሪ ፩</span>
+            <h2>የሻወር ቦክስ ልዩ ዲዛይኖች (ክፍል 1)</h2>
+            <p class="lead">በደንበኞቻችን ቤት የተገጠሙ ዘመናዊ የመታጠቢያ ቤት መስታወት ሥራዎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=900&q=80" alt="ሻወር ቦክስ ናሙና">
+                    <div class="photo-caption"><span>የማዕዘን ሻወር ቦክስ</span><span>ፎቶ 7</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=80" alt="ሻወር ቦክስ ናሙና">
+                    <div class="photo-caption"><span>ጥቁር ፍሬም ሻወር ቦክስ</span><span>ፎቶ 8</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 10: ጋለሪ ፪ (Photos 9 & 10) -->
+        <section class="page" id="page-10" data-bg="linear-gradient(135deg, #141836 0%, #232a5c 100%)">
+            <span class="page-badge">ገጽ 10 — የሥራ ናሙና ጋለሪ ፪</span>
+            <h2>የሻወር ቦክስ ልዩ ዲዛይኖች (ክፍል 2)</h2>
+            <p class="lead">ውሃ የማያሳልፉ እና ለአጠቃቀም ምቹ የሆኑ የመስታወት መታጠቢያ ክፍሎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?auto=format&fit=crop&w=900&q=80" alt="ሻወር ቦክስ ናሙና">
+                    <div class="photo-caption"><span>ፍሬምለስ የመስታወት በር</span><span>ፎቶ 9</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=900&q=80" alt="ሻወር ቦክስ ናሙና">
+                    <div class="photo-caption"><span>የቅንጦት ሻወር ቦክስ</span><span>ፎቶ 10</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 11: ጋለሪ ፫ (Photos 11 & 12) -->
+        <section class="page" id="page-11" data-bg="linear-gradient(135deg, #1e1e24 0%, #32323c 100%)">
+            <span class="page-badge">ገጽ 11 — የሥራ ናሙና ጋለሪ ፫</span>
+            <h2>የደረጃ ሀንዲሪል ሥራዎች (ክፍል 1)</h2>
+            <p class="lead">ለቤት ውስጥ ደረጃዎች ውበት እና ጥንካሬ የሚሰጡ የመስታወት ሀንዲሪሎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80" alt="ሀንዲሪል ናሙና">
+                    <div class="photo-caption"><span>የውስጥ ደረጃ ሀንዲሪል</span><span>ፎቶ 11</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80" alt="ሀንዲሪል ናሙና">
+                    <div class="photo-caption"><span>ዘመናዊ ቪላ ሀንዲሪል</span><span>ፎቶ 12</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 12: ጋለሪ ፬ (Photos 13 & 14) -->
+        <section class="page" id="page-12" data-bg="linear-gradient(135deg, #0b1f3a 0%, #153866 100%)">
+            <span class="page-badge">ገጽ 12 — የሥራ ናሙና ጋለሪ ፬</span>
+            <h2>የበረንዳ ሀንዲሪል ሥራዎች (ክፍል 2)</h2>
+            <p class="lead">ለአፓርትመንት በረንዳዎች እና ሰገነቶች ያልተገደበ እይታ የሚሰጡ የመስታወት መከለያዎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=900&q=80" alt="በረንዳ ሀንዲሪል">
+                    <div class="photo-caption"><span>የበረንዳ መስታወት ሀንዲሪል</span><span>ፎቶ 13</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=900&q=80" alt="በረንዳ ሀንዲሪል">
+                    <div class="photo-caption"><span>ባለቀለም በረንዳ መስታወት</span><span>ፎቶ 14</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 13: ጋለሪ ፭ (Photos 15 & 16) -->
+        <section class="page" id="page-13" data-bg="linear-gradient(135deg, #241029 0%, #3d1b46 100%)">
+            <span class="page-badge">ገጽ 13 — የሥራ ናሙና ጋለሪ ፭</span>
+            <h2>ፍሬምለስ ፓርትሽን እና የቢሮ ክፍሎች</h2>
+            <p class="lead">ዘመናዊ የሥራ አካባቢን የሚፈጥሩ የመስታወት መከለያዎች እና በሮች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=900&q=80" alt="የቢሮ ፓርትሽን">
+                    <div class="photo-caption"><span>የስብሰባ ክፍል ፓርትሽን</span><span>ፎቶ 15</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80" alt="የቢሮ ፓርትሽን">
+                    <div class="photo-caption"><span>ፍሬምለስ የመስታወት በር</span><span>ፎቶ 16</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 14: ጋለሪ ፮ (Photos 17 & 18) -->
+        <section class="page" id="page-14" data-bg="linear-gradient(135deg, #0c262b 0%, #16444d 100%)">
+            <span class="page-badge">ገጽ 14 — የሥራ ናሙና ጋለሪ ፮</span>
+            <h2>የሪል እስቴት እና የንግድ ሕንፃ መስታወቶች</h2>
+            <p class="lead">ትላልቅ ሕንፃዎችን ውብ እና ዘመናዊ የሚያደርጉ የውጭ መስታወት ሥራዎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=900&q=80" alt="የንግድ ሕንፃ መስታወት">
+                    <div class="photo-caption"><span>የንግድ ሕንፃ ገጽታ</span><span>ፎቶ 17</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80" alt="ሪል እስቴት መስታወት">
+                    <div class="photo-caption"><span>ሪል እስቴት ፕሮጀክት</span><span>ፎቶ 18</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 15: ጋለሪ ፯ (Photos 19 & 20) -->
+        <section class="page" id="page-15" data-bg="linear-gradient(135deg, #291410 0%, #47231c 100%)">
+            <span class="page-badge">ገጽ 15 — የሥራ ናሙና ጋለሪ ፯ (20ኛ ፎቶ)</span>
+            <h2>ልዩ የውስጥ ዲዛይን እና ባለቀለም መስታወቶች</h2>
+            <p class="lead">ለሳሎን፣ ለመመገቢያ ክፍሎች እና ለመሸጫ ሱቆች የሚሆኑ ልዩ የመስታወት ሥራዎች።</p>
+            <div class="grid-2">
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80" alt="የውስጥ ዲዛይን መስታወት">
+                    <div class="photo-caption"><span>ዘመናዊ የቤት ውስጥ መስታወት</span><span>ፎቶ 19</span></div>
+                </div>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80" alt="ባለቀለም መስታወት">
+                    <div class="photo-caption"><span>ባለቀለም ጌጣጌጥ መስታወት</span><span>ፎቶ 20</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 16: የመስታወት ውፍረት እና ደረጃዎች -->
+        <section class="page" id="page-16" data-bg="linear-gradient(135deg, #1d2411 0%, #323e1d 100%)">
+            <span class="page-badge">ገጽ 16 — ቴክኒካል መረጃ</span>
+            <h2>የምናቀርባቸው የመስታወት ውፍረቶች</h2>
+            <p class="lead">ለእያንዳንዱ የሥራ ዓይነት ትክክለኛውን የመስታወት ውፍረት እና ጥንካሬ እንመርጥልዎታለን።</p>
+            <div class="grid-3">
+                <div class="glass-card">
+                    <h3>6ሚ.ሜ - 8ሚ.ሜ መስታወት</h3>
+                    <p style="color: var(--text-muted);">ለመስኮቶች፣ ለአፓርትመንት በሮች እና ለቀላል የውስጥ ክፍል መስታወቶች ተስማሚ።</p>
+                </div>
+                <div class="glass-card">
+                    <h3>10ሚ.ሜ ቴምፐርድ መስታወት</h3>
+                    <p style="color: var(--text-muted);">ለሻወር ቦክስ እና ለቢሮ ፍሬምለስ ፓርትሽን በከፍተኛ ደረጃ የሚመከር።</p>
+                </div>
+                <div class="glass-card">
+                    <h3>12ሚ.ሜ - 16ሚ.ሜ ላሚኔትድ</h3>
+                    <p style="color: var(--text-muted);">ለደረጃ ሀንዲሪል፣ ለበረንዳ መከለያ እና ለትላልቅ የሕንፃ ገጽታዎች የሚውል።</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 17: ቴምፐርድ (Tempered) መስታወት ጥቅም -->
+        <section class="page" id="page-17" data-bg="linear-gradient(135deg, #092129 0%, #123e4d 100%)">
+            <span class="page-badge">ገጽ 17 — ደህንነት</span>
+            <h2>ለምን ቴምፐርድ (Tempered) መስታወት እንጠቀማለን?</h2>
+            <p class="lead">የደንበኞቻችን ደህንነት ከሁሉም በላይ ነው። ቴምፐርድ መስታወት ከተለመደው መስታወት በ5 እጥፍ የበለጠ ጠንካራ ነው።</p>
+            <div class="glass-card">
+                <h3>የደህንነት ዋስትና</h3>
+                <p style="color: var(--text-muted); line-height: 1.9;">
+                    1. ከፍተኛ ግፊትን እና ሙቀትን የመቋቋም አቅም አለው።<br>
+                    2. በድንገት ቢሰበር እንኳን እንደ ሹል ስብርባሪ ሳይሆን ጉዳት በማያደርሱ ጥቃቅን ፍርፋሪዎች ይበተናል።<br>
+                    3. ለሻወር ቦክስ፣ ለሀንዲሪል እና ለፍሬምለስ በሮች ብቸኛው አስተማማኝ ምርጫ ነው።
+                </p>
+            </div>
+        </section>
+
+        <!-- PAGE 18: የአሠራር ሂደታችን (Our Process) -->
+        <section class="page" id="page-18" data-bg="linear-gradient(135deg, #241c10 0%, #3e301b 100%)">
+            <span class="page-badge">ገጽ 18 — የአሠራር ሂደት</span>
+            <h2>ሥራችንን እንዴት እናከናውናለን?</h2>
+            <p class="lead">ትዕዛዝ ከሰጡን ቀን ጀምሮ እስከ ርክክብ ድረስ ግልፅ እና ቀልጣፋ አሠራር እንከተላለን።</p>
+            <div class="grid-3">
+                <div class="glass-card">
+                    <h3>ደረጃ 1፦ ልኬት መውሰድ</h3>
+                    <p style="color: var(--text-muted);">ባለሙያዎቻችን እርስዎ ባሉበት ቦታ በመገኘት ትክክለኛውን ልኬት ይወስዳሉ።</p>
+                </div>
+                <div class="glass-card">
+                    <h3>ደረጃ 2፦ ዝግጅትና ማምረት</h3>
+                    <p style="color: var(--text-muted);">በመረጡት ቀለም እና ውፍረት መሠረት መስታወቱ በዘመናዊ ማሽን ይቆረጣል፣ ይሞረዳል።</p>
+                </div>
+                <div class="glass-card">
+                    <h3>ደረጃ 3፦ ንፁህ ገጠማ</h3>
+                    <p style="color: var(--text-muted);">በተያዘለት ቀን ጥራታቸውን በጠበቁ አክሰሰሪዎች ተገጥሞ ንፁህ ሆኖ ይረከባሉ።</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 19: አክሰሰሪዎች እና ፊቲንጎች -->
+        <section class="page" id="page-19" data-bg="linear-gradient(135deg, #162129 0%, #273a48 100%)">
+            <span class="page-badge">ገጽ 19 — ጥራት ያላቸው አክሰሰሪዎች</span>
+            <h2>የመስታወት መያዣዎች እና ፊቲንጎች</h2>
+            <p class="lead">የመስታወት ሥራ ጥራቱ የሚረጋገጠው በሚገጠሙለት መያዣዎች (Fittings) ጥንካሬ ጭምር ነው።</p>
+            <div class="glass-card">
+                <h3>304 ስቴንለስ ስቲል (Stainless Steel)</h3>
+                <p style="color: var(--text-muted); line-height: 1.9;">
+                    • ለሻወር ቦክስ እና ለሀንዲሪል የምንጠቀማቸው መያዣዎች በእርጥበት የማይዝጉ (Rust-proof) ናቸው።<br>
+                    • በወርቃማ (Gold)፣ በጥቁር (Matte Black) እና በብር (Chrome/Silver) ቀለማት ይገኛሉ።
+                </p>
+            </div>
+        </section>
+
+        <!-- PAGE 20: ለተቋራጮች እና ዲዛይነሮች -->
+        <section class="page" id="page-20" data-bg="linear-gradient(135deg, #211226 0%, #391f42 100%)">
+            <span class="page-badge">ገጽ 20 — የንግድ አጋርነት</span>
+            <h2>ለሪል እስቴቶች፣ ኮንትራክተሮች እና ኢንቴሪየር ዲዛይነሮች</h2>
+            <p class="lead">ከግንባታ ባለሙያዎች እና ከሪል እስቴት አልሚዎች ጋር በቋሚነት እና በታማኝነት አብረን እንሠራለን።</p>
+            <div class="glass-card">
+                <h3>የአጋርነት ጥቅሞች</h3>
+                <p style="color: var(--text-muted); line-height: 1.9;">
+                    ✓ ለትላልቅ ፕሮጀክቶች በኮንትራት ወይም በአቅርቦት ደረጃ እንሠራለን።<br>
+                    ✓ ናሙናዎችን (Samples) በቀጥታ ሳይት ድረስ በማምጣት እናሳያለን።
+                </p>
+            </div>
+        </section>
+
+        <!-- PAGE 21: ተደጋጋሚ ጥያቄዎች (FAQ) -->
+        <section class="page" id="page-21" data-bg="linear-gradient(135deg, #0f241d 0%, #1b4034 100%)">
+            <span class="page-badge">ገጽ 21 — ተደጋጋሚ ጥያቄዎች</span>
+            <h2>ደንበኞች የሚጠይቋቸው ጥያቄዎች</h2>
+            <div class="grid-2" style="margin-top: 20px;">
+                <div class="glass-card">
+                    <h3>ሥራው ስንት ቀን ይፈጃል?</h3>
+                    <p style="color: var(--text-muted);">ልኬት ከተወሰደ በኋላ እንደ ሥራው ስፋት ከ3 እስከ 7 የሥራ ቀናት ውስጥ አጠናቅቀን እንገጥማለን።</p>
+                </div>
+                <div class="glass-card">
+                    <h3>ከአዲስ አበባ ውጭ ትሠራላችሁ?</h3>
+                    <p style="color: var(--text-muted);">አዎ! በአዲስ አበባ እና በተለያዩ የክልል ከተሞች ለሚገኙ ፕሮጀክቶች አቅርቦትና ገጠማ እንሰጣለን።</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 22: ማነጋገሪያ (Contact Us) -->
+        <section class="page" id="page-22" data-bg="linear-gradient(135deg, #080808 0%, #1f1a0d 100%)">
+            <span class="page-badge">ገጽ 22 — ማነጋገሪያ</span>
+            <h2>መተባበር ጠቅላላ የመስታወት ሥራና አቅርቦትን ያግኙ</h2>
+            <p class="lead">ለዋጋ ግምት፣ ለሳይት ልኬት ወይም ለማንኛውም ጥያቄ ከታች ባሉት ስልክ ቁጥሮች አሁኑኑ ይደውሉልን።</p>
+            <div class="grid-2">
+                <div>
+                    <a href="tel:0965642265" class="phone-box">
+                        <i class="fa-solid fa-phone-volume" style="color: var(--gold);"></i>
+                        <span>0965642265</span>
+                    </a>
+                    <a href="tel:0938231383" class="phone-box">
+                        <i class="fa-solid fa-phone-volume" style="color: var(--gold);"></i>
+                        <span>0938231383</span>
+                    </a>
+                    <a href="tel:0943399605" class="phone-box">
+                        <i class="fa-solid fa-phone-volume" style="color: var(--gold);"></i>
+                        <span>0943399605</span>
+                    </a>
+                </div>
+                <div class="glass-card" style="text-align: center;">
+                    <i class="fa-solid fa-gem" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 14px;"></i>
+                    <h3>ጥራት፣ ውበት እና ታማኝነት!</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">የእርስዎን ሕንፃ እና ቤት በዘመናዊ መስታወት ለማስዋብ ሁልጊዜ ዝግጁ ነን።</p>
+                    <a href="tel:0965642265" class="btn-gold"><i class="fa-solid fa-phone"></i> ቀጥታ ይደውሉ</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Prev / Next Navigation -->
+    <div class="bottom-controls">
+        <button class="nav-arrow" onclick="changePage(-1)"><i class="fa-solid fa-arrow-left"></i> ቀዳሚ ገጽ</button>
+        <span style="color: var(--gold-bright); font-weight: 600; font-size: 0.9rem;" id="bottom-title">መግቢያ</span>
+        <button class="nav-arrow" onclick="changePage(1)">ቀጣይ ገጽ <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <script>
+        const totalPages = 22;
+        let currentPage = 1;
+
+        const pageTitles = [
+            "መግቢያ", "ስለኛ", "የሪል እስቴት መስታወት", "የአፓርትመንቶች መስታወት",
+            "የሻወር ቦክስ", "ፍሬምለስ ፓርትሽን", "ሀንዲሪል", "ከለር ያላቸው መስታወቶች",
+            "ሻወር ቦክስ ጋለሪ ፩", "ሻወር ቦክስ ጋለሪ ፪", "ሀንዲሪል ጋለሪ ፩", "ሀንዲሪል ጋለሪ ፪",
+            "ፍሬምለስ ፓርትሽን ጋለሪ", "ሪል እስቴት ጋለሪ", "ልዩ ዲዛይን ጋለሪ", "የመስታወት ውፍረቶች",
+            "ቴምፐርድ መስታወት", "የአሠራር ሂደት", "አክሰሰሪዎች", "የንግድ አጋርነት",
+            "ተደጋጋሚ ጥያቄዎች", "ማነጋገሪያ"
+        ];
+
+        // Generate 1 to 22 buttons in the top strip
+        const strip = document.getElementById('page-strip');
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'page-num-btn' + (i === 1 ? ' active' : '');
+            btn.textContent = i;
+            btn.id = 'btn-page-' + i;
+            btn.title = `ገጽ ${i}: ${pageTitles[i - 1]}`;
+            btn.onclick = () => goToPage(i);
+            strip.appendChild(btn);
+        }
+
+        function goToPage(pageNum) {
+            if (pageNum < 1) pageNum = totalPages;
+            if (pageNum > totalPages) pageNum = 1;
+            currentPage = pageNum;
+
+            // Hide all pages and deactivate buttons
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.page-num-btn').forEach(b => b.classList.remove('active'));
+
+            // Show target page
+            const targetPage = document.getElementById('page-' + currentPage);
+            targetPage.classList.add('active');
+
+            // Apply unique background color of that specific page to body & section
+            const bg = targetPage.getAttribute('data-bg');
+            document.body.style.background = bg;
+            targetPage.style.background = bg;
+
+            // Highlight active page button
+            const activeBtn = document.getElementById('btn-page-' + currentPage);
+            activeBtn.classList.add('active');
+            activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
+            // Update counters and titles
+            document.getElementById('page-counter').textContent = `ገጽ ${currentPage} / ${totalPages}`;
+            document.getElementById('bottom-title').textContent = `${currentPage}. ${pageTitles[currentPage - 1]}`;
+
+            // Highlight main menu buttons
+            document.querySelectorAll('.main-nav button').forEach(b => b.classList.remove('active-nav'));
+            if (currentPage === 1) document.getElementById('nav-home').classList.add('active-nav');
+            else if (currentPage === 2) document.getElementById('nav-about').classList.add('active-nav');
+            else if (currentPage >= 3 && currentPage <= 8) document.getElementById('nav-services').classList.add('active-nav');
+            else if (currentPage === 22) document.getElementById('nav-contact').classList.add('active-nav');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function changePage(step) {
+            goToPage(currentPage + step);
+        }
+
+        // Initialize Page 1 background
+        goToPage(1);
+    </script>
+</body>
+</html>
